@@ -35,7 +35,7 @@ const auctionApi = {
         
                 const queryString =  buildUrls('', parameters)
 
-                return axios.get(`${this.url}/product${ queryString }`)
+                return axios.get(`${this.url}/products${ queryString }`)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

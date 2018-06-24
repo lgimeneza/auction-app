@@ -37,31 +37,34 @@ mongoose.connect(DB_URL)
         const user01 = new User({ email: 'jd@email.com', password: '123', name: 'John', surname: 'Doe', role: 'customer', registerDate: Date.now(), products: [], address: address01, wishes:[] })
         const user02 = new User({ email: 'email02@email.com', password: '123', name: 'Chas', surname: 'Keaveny', role: 'customer', registerDate: Date.now(), products: [], address: address02, wishes:[] })
         const user03 = new User({ email: 'email03@email.com', password: '123', name: 'Falito', surname: 'Galtone', role: 'customer', registerDate: Date.now(), products: [], address: address03, wishes:[] })
-        const user04 = new User({ email: 'email04@email.com', password: '123', name: 'Elke', surname: 'Hand', role: 'customer', registerDate: Date.now(), products: [], address: address04, wishes:[] })
-        const user05 = new User({ email: 'email05@email.com', password: '123', name: 'Lucie', surname: 'Hannis', role: 'customer', registerDate: Date.now(), products: [], address: address05, wishes:[] })
+        const user04 = new User({ email: 'mikel@email.com', password: '123', name: 'Elke', surname: 'Hand', role: 'customer', registerDate: Date.now(), products: [], address: address04, wishes:[] })
+        const user05 = new User({ email: 'lilam.gimenez@gmail.com', password: '123', name: 'Lilam', surname: 'Giménez', role: 'customer', registerDate: Date.now(), products: [], address: address05, wishes:[] })
 
         const bid01 = new Bid({ price: 120, date: Date.now(), user: user04 })
-        const bid02 = new Bid({ price: 150, date: Date.now(), user: user02 })
+        const bid02 = new Bid({ price: 400, date: Date.now(), user: user02 })
 
-        const bid03 = new Bid({ price: 110, date: Date.now(), user: user03 })
-        const bid04 = new Bid({ price: 120, date: Date.now(), user: user02 })
+        const bid03 = new Bid({ price: 100, date: Date.now(), user: user03 })
+        const bid04 = new Bid({ price: 110, date: Date.now(), user: user02 })
 
-        const bid05 = new Bid({ price: 110, date: Date.now(), user: user04 })
-        const bid06 = new Bid({ price: 120, date: Date.now(), user: user02 })
+        const bid05 = new Bid({ price: 160, date: Date.now(), user: user04 })
+        const bid06 = new Bid({ price: 360, date: Date.now(), user: user02 })
 
         const bid07 = new Bid({ price: 100, date: Date.now(), user: user02 })
-        const bid08 = new Bid({ price: 100, date: Date.now(), user: user03 })
-        const bid09 = new Bid({ price: 100, date: Date.now(), user: user03 })
-        const bid10 = new Bid({ price: 100, date: Date.now(), user: user03 })
-        const bid11 = new Bid({ price: 100, date: Date.now(), user: user03 })
+        const bid08 = new Bid({ price: 120, date: Date.now(), user: user03 })
+
+        const bid09 = new Bid({ price: 50, date: Date.now(), user: user03 })
+        const bid10 = new Bid({ price: 60, date: Date.now(), user: user03 })
+
+        const bid11 = new Bid({ price: 85, date: Date.now(), user: user03 })
+        const bid12 = new Bid({ price: 90, date: Date.now(), user: user03 })
 
         const product01 = new Product({ 
             title: 'MacBook Pro de 13 pulgadas 128GB',
             description: 'Intel Core i5 de doble núcleo a 2,3 GHz8 GB de memoria RAM128 GB flash PCIeIntel Iris Plus Graphics 640',
             startDate: '2018-05-23T18:25:43.511Z',
-            endDate: '2018-06-22T16:20:16.511Z',
+            endDate: '2018-08-23T18:20:16.511Z',
             startPrice: 100,
-            currentPrice: 150,
+            currentPrice: 400,
             currentUser: user05,
             currentBid: bid02,
             closed: false,
@@ -76,9 +79,9 @@ mongoose.connect(DB_URL)
             title: 'Beats Solo3 Wireless On-Ear Auriculares',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
             startDate: '2018-06-18T19:10:10.511Z',
-            endDate: '2018-06-22T20:15:05.511Z',
-            startPrice: 100,
-            currentPrice: 120,
+            endDate: '2018-08-22T20:15:05.511Z',
+            startPrice: 90,
+            currentPrice: 110,
             currentUser: user02,
             currentBid: bid04,
             closed: false,
@@ -93,9 +96,9 @@ mongoose.connect(DB_URL)
             title: 'MacBook Pro de 15 pulgadas 256GB',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
             startDate: '2018-06-17T11:18:12.511Z',
-            endDate: '2018-06-24T13:15:12.511Z',
-            startPrice: 100,
-            currentPrice: 120,
+            endDate: '2018-08-24T13:15:12.511Z',
+            startPrice: 150,
+            currentPrice: 360,
             currentUser: user02,
             currentBid: bid06,
             closed: false,
@@ -107,54 +110,54 @@ mongoose.connect(DB_URL)
         })
 
         const product04 = new Product({ 
-            title: 'Tablet Pixel C 256GB',
+            title: 'Tablet Pixel C 256GB Tab E 8 GB - 1.3 GHz',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
             startDate: '2018-04-10T11:18:12.511Z',
-            endDate: '2018-06-20T18:31:12.511Z',
-            startPrice: 100,
+            endDate: '2018-08-23T14:20:12.511Z',
+            startPrice: 90,
             currentPrice: 120,
             currentUser: user02,
             currentBid: bid06,
             closed: false,
             images: [image04, image07, image04, image07],
-            category: category01,
+            category: category04,
             winningBid: null,
             winningUser: null,
-            bids: [bid05, bid06]
+            bids: [bid07, bid08]
         })
 
         const product05 = new Product({ 
-            title: 'Smartphone OnePlus 256GB',
+            title: 'Xgody Android 5.5" Smartphone 3g Quad Core',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
             startDate: '2018-04-10T11:18:12.511Z',
             endDate: '2018-06-20T18:20:10.511Z',
-            startPrice: 100,
-            currentPrice: 120,
+            startPrice: 40,
+            currentPrice: 60,
             currentUser: user02,
             currentBid: bid06,
             closed: false,
             images: [image07, image09, image07, image09],
-            category: category01,
+            category: category02,
             winningBid: null,
             winningUser: null,
-            bids: [bid05, bid06]
+            bids: [bid09, bid10]
         })
 
         const product06 = new Product({ 
-            title: 'Compact camera DSC 25',
+            title: '0lympus E-PL8 Cuerpo con Objetivo 14-42mm EZ',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
             startDate: '2018-04-10T11:18:12.511Z',
             endDate: '2018-06-20T18:31:12.511Z',
-            startPrice: 100,
-            currentPrice: 120,
+            startPrice: 80,
+            currentPrice: 90,
             currentUser: user02,
             currentBid: bid06,
             closed: false,
             images: [image09, image07, image09, image04],
-            category: category01,
+            category: category03,
             winningBid: null,
             winningUser: null,
-            bids: [bid05, bid06]
+            bids: [bid11, bid12]
         })        
 
         await Promise.all([

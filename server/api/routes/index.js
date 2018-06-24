@@ -14,7 +14,7 @@ const jwtValidator = jwtValidation(TOKEN_SECRET)
 
 const jsonBodyParser = bodyParser.json()
 
-router.get('/product', (req, res) => {
+router.get('/products', (req, res) => {
     const { query: { q, c, p } } = req
 
     const categories = c && c.split(',')

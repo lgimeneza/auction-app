@@ -50,7 +50,6 @@ class Product extends Component {
         this.props.getProduct(id)
 
         if (currentPrice){
-            console.log('didMount', currentPrice)
             this.setState({ 
                 bid: currentPrice, //when comes from server
                 nav1: this.slider1,
