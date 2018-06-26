@@ -2,8 +2,8 @@
 
 const auctionApi = require('api')
 
-//auctionApi.url = 'http://localhost:5000/api'
-auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api'
+auctionApi.url = 'http://localhost:5000/api'
+//auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api'
 
 const logic = {
 

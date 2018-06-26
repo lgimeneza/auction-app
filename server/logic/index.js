@@ -9,6 +9,7 @@ const logic = {
      * @param {string} query - Search criteria string
      * @param {Array<string>} categories - Array of category id to filter
      * @param {Array<string>} prices - Range of prices to filter [min, max]
+     * @returns {Promise<[Product]>} - Array of product objects
      */
     listProducts(query, categories, prices) {
         return Promise.resolve()
@@ -40,21 +41,21 @@ const logic = {
                 stages.push({
                     $project: {
                         _id: 1, title: 1, description: 1, startDate: 1, endDate: 1,
-                        //startPrice: 1, closed: 1, images: 1, maxBid: { $ifNull: [{ $max: '$bids.price' }, '$startPrice'] }
                         startPrice: 1, closed: 1, images: 1, currentPrice: 1
+                        //startPrice: 1, closed: 1, images: 1, maxBid: { $ifNull: [{ $max: '$bids.price' }, '$startPrice'] }
                     }
                 })
 
                 return Product.find({endDate: { $lt: Date.now() }})
                     .then(res => {
                         res.forEach(product => {
-
+                            // Check and updates closed auctions endDate > now
                             return Product.findByIdAndUpdate(product._id.toString(), { closed: true, winningBid: product.currentBid, winningUser: product.currentUser }, { new: true })
                                 .then( result => result )
 
                         })
                     }).then(() => {
-
+                        // Exec query with filters
                         return Product.aggregate(stages)
                             .then(products => {
                                 if (!products) throw Error(`no products found`)
@@ -70,7 +71,8 @@ const logic = {
 
     /**
      * Retrieve the user's bid list.
-     *  @returns {Promise<[Product]>} - Array of product objects
+     * @param {string} userId - id of the user
+     * @returns {Promise<[Product]>} - Array of products objects
      */
     listUserProducts(userId){
         return Promise.resolve()
@@ -189,9 +191,18 @@ const logic = {
      * @returns {Promise<string>} - Bid id string
      */
     addBid(productId, userId, price) {
-        //TODO: not alow lower or closed bid
         return Promise.resolve()
             .then(() => {
+                if (typeof productId !== 'string') throw Error('product id is not a string')
+
+                if (!(productId = productId.trim()).length) throw Error('product id is empty or blank')
+
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof price !== 'number') throw Error('price is not a number')
+
                 return User.findById(userId)
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
@@ -199,7 +210,9 @@ const logic = {
                         return Product.findById(productId)
                             .then(productmatch => {
                                 if(!productmatch) throw Error(`no product found with id ${productId}`)
+                                // Ceck if auction is closed
                                 if(productmatch.closed) throw Error('the product is closed')
+                                // Not alow a lower bid
                                 if(productmatch.currentPrice > price) throw Error('the bid price is lower')
                                 
                                 const bid = new Bid({ price, date: Date.now(), user: user._id })

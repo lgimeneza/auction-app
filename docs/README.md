@@ -1,10 +1,10 @@
-# Isomorphic SSR + React + Redux Auction App Demo
+# Isomorphic SSR + React + Redux Auction Demo App
 
 ## Functional description
 
 ### This project explores how to do an Isomorphic Server Side Rendering App with React + Redux combined with events on client side with socket.io 
 
-Demo: [HotAuctions Demo App](https://intense-plains-98825.herokuapp.com/)
+Demo: [Demo App](https://intense-plains-98825.herokuapp.com/)
 
 <br>
 

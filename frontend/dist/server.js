@@ -1735,7 +1735,6 @@ var Product = function (_Component) {
             _this.props.getProduct(id);
 
             if (currentPrice) {
-                console.log('didMount', currentPrice);
                 _this.setState({
                     bid: currentPrice, //when comes from server
                     nav1: _this.slider1,
@@ -3509,8 +3508,8 @@ function search(query, categories) {
 
 var auctionApi = __webpack_require__(/*! api */ "api");
 
-//auctionApi.url = 'http://localhost:5000/api'
-auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api';
+auctionApi.url = 'http://localhost:5000/api';
+//auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api'
 
 var logic = {
 
@@ -3590,7 +3589,7 @@ var logic = {
      * Authenticate the user and log in saving the user info in this logic.
      * @param {string} username - The username to log in. Email of the user.
      * @param {string} password - User's password.
-     *  @returns {Object<User>}} - User object.
+     * @returns {Object<User>}} - User object.
      */
     login: function login(username, password) {
         var _this = this;

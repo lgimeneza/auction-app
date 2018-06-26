@@ -14,6 +14,7 @@ describe('logic (auction)', () => {
     const image01 = 'https://firebasestorage.googleapis.com/v0/b/auction-app-da584.appspot.com/o/product01.png?alt=media&token=98d69ce5-7c4c-4665-811f-b4a2bf15e150' // Macbook 13
     const category01 = new Category({ name: 'Laptops' })
     const address01 = new Address({ line1: 'carrer major nº1', line2: 'baixos 3a', city: 'barcelona',  province: 'barcelona', postcode: '08770', country: 'Spain' })
+    const userData = { email: 'jd@email.com', password: '123', name: 'John', surname: 'Doe', role: 'customer', registerDate: Date.now(), products: [], address: address01, wishes:[] }
     const user01 = new User({ email: 'jd@email.com', password: '123', name: 'John', surname: 'Doe', role: 'customer', registerDate: Date.now(), products: [], address: address01, wishes:[] })
     const bid01 = new Bid({ price: 120, date: Date.now(), user: user01 })
     const bid02 = new Bid({ price: 150, date: Date.now(), user: user01 })
@@ -165,18 +166,8 @@ describe('logic (auction)', () => {
     })
 
     describe('add bid', () => {
+
         it('should succeed on correct data', async () => {
-
-            const _address = {
-                line1: 'carrer major nº1',
-                line2: 'baixos 3a',
-                city: 'barcelona',
-                province: 'barcelona',
-                postcode: '08770',
-                country: 'Spain'
-            }
-
-            const newAddress = new Address(_address)
 
             const _user = {
                 email: 'email@email.com',
@@ -186,7 +177,7 @@ describe('logic (auction)', () => {
                 role: 'admin',
                 registerDate: Date.now(),
                 products: [],
-                address: newAddress,
+                address: address01,
                 wishes: []
             }
 
@@ -208,8 +199,8 @@ describe('logic (auction)', () => {
             }
             const newProduct = await new Product(_product).save()
 
-            const userId = newUser._id
-            const productId = newProduct._id
+            const userId = newUser._id.toString()
+            const productId = newProduct._id.toString()
             const _price = 600
 
             return logic.addBid(productId, userId, _price)
@@ -232,20 +223,9 @@ describe('logic (auction)', () => {
                 })
 
         })
-        
-        it('should fail on add bid with lower price ', async () => {
+
+        it('should fail on product id is not a string', async () => {
     
-            const _address = {
-                line1: 'carrer major nº1',
-                line2: 'baixos 3a',
-                city: 'barcelona',
-                province: 'barcelona',
-                postcode: '08770',
-                country: 'Spain'
-            }
-
-            const newAddress = new Address(_address)
-
             const _user = {
                 email: 'email@email.com',
                 password: '123',
@@ -254,7 +234,7 @@ describe('logic (auction)', () => {
                 role: 'admin',
                 registerDate: Date.now(),
                 products: [],
-                address: newAddress,
+                address: address01,
                 wishes: []
             }
 
@@ -276,12 +256,258 @@ describe('logic (auction)', () => {
             }
             const newProduct = await new Product(_product).save()
 
-            const userId = newUser._id
-            const productId = newProduct._id
+            const userId = newUser._id.toString()
+            const productId = newProduct._id.toString()
+            const _price = 400
+
+            return logic.addBid({productId}, userId, _price)
+                .catch(({ message }) => expect(message).to.equal('product id is not a string'))
+
+        })
+
+        it('should fail on empty product id', async () => {
+    
+            const _user = {
+                email: 'email@email.com',
+                password: '123',
+                name: 'lilam',
+                surname: 'gimenez',
+                role: 'admin',
+                registerDate: Date.now(),
+                products: [],
+                address: address01,
+                wishes: []
+            }
+
+            const newUser = await new User(_user).save()
+
+            const _product = {
+                title: 'Mac Book Pro 2011',
+                description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+                startDate: '2012-04-23T18:25:43.511Z',
+                endDate: '2012-04-23T18:25:43.511Z',
+                startPrice: 500,
+                currentPrice: 500,
+                closed: false,
+                image: 'la url de la imagen',
+                category: null,
+                winningBid: null,
+                winningUser: null,
+                bids: []
+            }
+            const newProduct = await new Product(_product).save()
+
+            const userId = newUser._id.toString()
+            const productId = '    '
+            const _price = 400
+
+            return logic.addBid(productId, userId, _price)
+                .catch(({ message }) => expect(message).to.equal('product id is empty or blank'))
+
+        })
+
+        it('should fail on user id is not a string', async () => {
+    
+            const _user = {
+                email: 'email@email.com',
+                password: '123',
+                name: 'lilam',
+                surname: 'gimenez',
+                role: 'admin',
+                registerDate: Date.now(),
+                products: [],
+                address: address01,
+                wishes: []
+            }
+
+            const newUser = await new User(_user).save()
+
+            const _product = {
+                title: 'Mac Book Pro 2011',
+                description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+                startDate: '2012-04-23T18:25:43.511Z',
+                endDate: '2012-04-23T18:25:43.511Z',
+                startPrice: 500,
+                currentPrice: 500,
+                closed: false,
+                image: 'la url de la imagen',
+                category: null,
+                winningBid: null,
+                winningUser: null,
+                bids: []
+            }
+            const newProduct = await new Product(_product).save()
+
+            const userId = newUser._id.toString()
+            const productId = newProduct._id.toString()
+            const _price = 400
+
+            return logic.addBid(productId, {userId}, _price)
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+
+        })
+        
+        it('should fail on price is not a number', async () => {
+    
+            const _user = {
+                email: 'email@email.com',
+                password: '123',
+                name: 'lilam',
+                surname: 'gimenez',
+                role: 'admin',
+                registerDate: Date.now(),
+                products: [],
+                address: address01,
+                wishes: []
+            }
+
+            const newUser = await new User(_user).save()
+
+            const _product = {
+                title: 'Mac Book Pro 2011',
+                description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+                startDate: '2012-04-23T18:25:43.511Z',
+                endDate: '2012-04-23T18:25:43.511Z',
+                startPrice: 500,
+                currentPrice: 500,
+                closed: false,
+                image: 'la url de la imagen',
+                category: null,
+                winningBid: null,
+                winningUser: null,
+                bids: []
+            }
+            const newProduct = await new Product(_product).save()
+
+            const userId = newUser._id.toString()
+            const productId = newProduct._id.toString()
+            const _price = '400'
+
+            return logic.addBid(productId, userId, _price)
+                .catch(({ message }) => expect(message).to.equal('price is not a number'))
+
+        })
+
+        it('should fail on add bid with lower price ', async () => {
+    
+            const _user = {
+                email: 'email@email.com',
+                password: '123',
+                name: 'lilam',
+                surname: 'gimenez',
+                role: 'admin',
+                registerDate: Date.now(),
+                products: [],
+                address: address01,
+                wishes: []
+            }
+
+            const newUser = await new User(_user).save()
+
+            const _product = {
+                title: 'Mac Book Pro 2011',
+                description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+                startDate: '2012-04-23T18:25:43.511Z',
+                endDate: '2012-04-23T18:25:43.511Z',
+                startPrice: 500,
+                currentPrice: 500,
+                closed: false,
+                image: 'la url de la imagen',
+                category: null,
+                winningBid: null,
+                winningUser: null,
+                bids: []
+            }
+            const newProduct = await new Product(_product).save()
+
+            const userId = newUser._id.toString()
+            const productId = newProduct._id.toString()
             const _price = 400
 
             return logic.addBid(productId, userId, _price)
                 .catch(({ message }) => expect(message).to.equal('the bid price is lower'))
+
+        })
+
+        it('should fail on add bid with product id wrong ', async () => {
+    
+            const _user = {
+                email: 'email@email.com',
+                password: '123',
+                name: 'lilam',
+                surname: 'gimenez',
+                role: 'admin',
+                registerDate: Date.now(),
+                products: [],
+                address: address01,
+                wishes: []
+            }
+
+            const newUser = await new User(_user).save()
+
+            const _product = {
+                title: 'Mac Book Pro 2011',
+                description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+                startDate: '2012-04-23T18:25:43.511Z',
+                endDate: '2012-04-23T18:25:43.511Z',
+                startPrice: 500,
+                currentPrice: 500,
+                closed: false,
+                image: 'la url de la imagen',
+                category: null,
+                winningBid: null,
+                winningUser: null,
+                bids: []
+            }
+            const newProduct = await new Product(_product).save()
+
+            const userId = newUser._id.toString()
+            const productId = '507f191e810c19729de860ea'
+            const _price = 600
+
+            return logic.addBid(productId, userId, _price)
+                .catch(({ message }) => expect(message).to.equal(`no product found with id ${productId}`))
+
+        })
+
+        it('should fail on product is closed', async () => {
+    
+            const _user = {
+                email: 'email@email.com',
+                password: '123',
+                name: 'lilam',
+                surname: 'gimenez',
+                role: 'admin',
+                registerDate: Date.now(),
+                products: [],
+                address: address01,
+                wishes: []
+            }
+
+            const newUser = await new User(_user).save()
+
+            const _product = {
+                title: 'Mac Book Pro 2011',
+                description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+                startDate: '2012-04-23T18:25:43.511Z',
+                endDate: '2012-04-23T18:25:43.511Z',
+                startPrice: 500,
+                currentPrice: 500,
+                closed: true,
+                image: 'la url de la imagen',
+                category: null,
+                winningBid: null,
+                winningUser: null,
+                bids: []
+            }
+            const newProduct = await new Product(_product).save()
+
+            const userId = newUser._id.toString()
+            const productId = newProduct._id.toString()
+            const _price = 600
+
+            return logic.addBid(productId, userId, _price)
+                .catch(({ message }) => expect(message).to.equal('the product is closed'))
 
         })
 
@@ -303,7 +529,7 @@ describe('logic (auction)', () => {
 
     describe('authenticate user', () => {
         it('should succeed on correct data', () =>
-            user01.save()
+            User.create(userData)
                 .then(() =>
                     logic.authenticateUser('jd@email.com', '123')
                         .then(id => expect(id).to.exist)
@@ -343,7 +569,7 @@ describe('logic (auction)', () => {
 
     describe('retrieve user', () => {
         it('should succeed on correct data', () =>
-            user01.save()
+            User.create(userData)
                 .then(({ _id }) => {
                     return logic.retrieveUser(_id.toString())
                 })
